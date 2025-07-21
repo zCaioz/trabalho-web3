@@ -35,7 +35,7 @@ class Livro implements JsonSerializable {
     public function getAnoPublicacao(): ?int { return $this->anoPublicacao; }
     public function setAnoPublicacao(?int $anoPublicacao): void { $this->anoPublicacao = $anoPublicacao; }
 
-    public function jsonSerialize(): mixed {
+    public function jsonSerialize() {
         return [
             'id' => $this->id,
             'titulo' => $this->titulo,
