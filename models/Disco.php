@@ -35,7 +35,7 @@ class Disco implements JsonSerializable {
     public function getAnoLancamento(): ?int { return $this->anoLancamento; }
     public function setAnoLancamento(?int $anoLancamento): void { $this->anoLancamento = $anoLancamento; }
 
-    public function jsonSerialize(): mixed {
+    public function jsonSerialize() {
         return [
             'id' => $this->id,
             'titulo' => $this->titulo,
