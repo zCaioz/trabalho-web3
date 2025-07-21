@@ -4,8 +4,25 @@ require_once __DIR__ . '/controllers/DiscoController.php';
 require_once __DIR__ . '/controllers/UsuarioController.php';
 require_once __DIR__ . '/controllers/AuthController.php';
 
-session_start();
+// CORS dinâmico
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+$allowed_origins = ['https://bibilioteca-frontend.netlify.app'];
 
+if (in_array($origin, $allowed_origins)) {
+    header("Access-Control-Allow-Origin: $origin");
+    header("Access-Control-Allow-Credentials: true");
+}
+
+header("Access-Control-Allow-Methods: GET, POST, PATCH, DELETE, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
+
+// Requisições OPTIONS são só para CORS
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
+
+// ⚠️ Configuração do cookie deve vir ANTES do session_start()
 session_set_cookie_params([
   'lifetime' => 0,
   'path' => '/',
@@ -14,16 +31,7 @@ session_set_cookie_params([
   'httponly' => true,
   'samesite' => 'None'
 ]);
-
-header("Access-Control-Allow-Origin: https://bibilioteca-frontend.netlify.app");
-header("Access-Control-Allow-Credentials: true");
-header("Access-Control-Allow-Methods: GET, POST, PATCH, DELETE, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
-
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(200);
-    exit;
-}
+session_start();
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $method = $_SERVER['REQUEST_METHOD'];
