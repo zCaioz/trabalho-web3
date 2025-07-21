@@ -6,6 +6,15 @@ require_once __DIR__ . '/controllers/AuthController.php';
 
 session_start();
 
+session_set_cookie_params([
+  'lifetime' => 0,
+  'path' => '/',
+  'domain' => '', 
+  'secure' => true,
+  'httponly' => true,
+  'samesite' => 'None'
+]);
+
 header("Access-Control-Allow-Origin: https://bibilioteca-frontend.netlify.app");
 header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Methods: GET, POST, PATCH, DELETE, OPTIONS");
